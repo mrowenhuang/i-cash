@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "783358986799",
+    "firebase_url": "https://i-cash-demo-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "i-cash-demo",
+    "storage_bucket": "i-cash-demo.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:783358986799:android:089d5257de792724b194da",
+        "android_client_info": {
+          "package_name": "com.example.i_cash"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-V-E-aU7blmdii_vBzRLEoTkTu6AwzUE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

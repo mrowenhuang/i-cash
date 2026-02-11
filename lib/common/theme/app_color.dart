@@ -11,7 +11,7 @@ class AppColors {
   static const Color accentDark = Color(0xFFE6A000);
 
   // Background Colors
-  static const Color background = Color(0xFFF5F5F5); // Light grey background
+  static const Color background = Color(0xFFf0f1ec); // Light grey background
   static const Color cardBackground = Color(0xFFFFFFFF);
   static const Color sidebarBackground = Color(0xFFF8F8F8);
 
