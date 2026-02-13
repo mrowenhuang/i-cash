@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:i_cash/common/theme/app_color.dart';
 import 'package:i_cash/common/theme/app_theme.dart';
+import 'package:i_cash/core/intern/password.dart';
 import 'package:i_cash/core/widget/sidebar_button.dart';
 
 class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
+  LoginPage({super.key});
+  final TextEditingController emailC = TextEditingController();
+  final TextEditingController passC = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -22,12 +25,9 @@ class LoginPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Image.asset(
-                    'assets/icons/icash.png',
-                    height: 130,
-                    color: AppColors.primaryDark,
-                  ),
+                  Image.asset('assets/icons/icash.png', height: 130),
                   sideBarButton(
+                    iconPath: 'assets/icons/sign-in.png',
                     text: "Login",
                     style: AppTheme.lightTheme.textTheme.bodyLarge?.copyWith(
                       fontWeight: FontWeight.bold,
@@ -55,12 +55,38 @@ class LoginPage extends StatelessWidget {
                               ?.copyWith(color: AppColors.primaryDark),
                         ),
                         Divider(),
-                        SizedBox(height: 15,),
-                        TextField(),
-                        SizedBox(height: 15,),
-                        TextField(),
-                        SizedBox(height: 15,),
-                        ElevatedButton.icon(onPressed: () {}, label: Text("Masuk"),icon: Icon(Icons.login),),
+                        SizedBox(height: 15),
+                        TextField(
+                          controller: emailC,
+                          decoration: InputDecoration(
+                            prefixIcon: Icon(
+                              Icons.person,
+                              color: AppColors.primary,
+                            ),
+                            hintText: "Username",
+                          ),
+                        ),
+                        SizedBox(height: 15),
+                        TextField(
+                          controller: passC,
+                          obscureText: true,
+                          decoration: InputDecoration(
+                            prefixIcon: Icon(
+                              Icons.lock,
+                              color: AppColors.primary,
+                            ),
+                            hintText: "Password",
+                          ),
+                        ),
+                        SizedBox(height: 15),
+                        ElevatedButton.icon(
+                          onPressed: () {
+                            var data = hashPassword(passC.text);
+                            print(data);
+                          },
+                          label: Text("Masuk"),
+                          icon: Icon(Icons.login),
+                        ),
                       ],
                     ),
                   ),

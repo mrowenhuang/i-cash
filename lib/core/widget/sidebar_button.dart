@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:i_cash/common/theme/app_color.dart';
 import 'package:i_cash/common/theme/app_theme.dart';
 
-Widget sideBarButton({required String text, required TextStyle? style}) {
+Widget sideBarButton({
+  required String text,
+  required TextStyle? style,
+  required String iconPath,
+}) {
   return Container(
     width: double.infinity,
     padding: EdgeInsets.all(16),
@@ -13,12 +17,13 @@ Widget sideBarButton({required String text, required TextStyle? style}) {
     ),
     child: Row(
       children: [
-        Image.asset('assets/icons/dashboard.png'),
-        SizedBox(width: 15),
-        Text(
-          text,
-          style: style
+        Image.asset(
+          iconPath,
+          color: AppColors.primaryDark,
+          height: 24,
         ),
+        SizedBox(width: 15),
+        Text(text, style: style),
       ],
     ),
   );
