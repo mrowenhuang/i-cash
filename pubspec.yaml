@@ -31,6 +31,7 @@ dependencies:
   bloc: ^9.2.0
   crypto: ^3.0.7
   cupertino_icons: ^1.0.8
+  custom_sliding_segmented_control: ^1.8.5
   dartz: ^0.10.1
   device_info_plus: ^12.3.0
   equatable: ^2.0.8
@@ -41,6 +42,8 @@ dependencies:
     sdk: flutter
   flutter_bloc: ^9.1.1
   get_it: ^9.2.0
+  get_x: ^5.0.0
+  intl: ^0.20.2
   sqflite: ^2.4.2
 
 dev_dependencies:

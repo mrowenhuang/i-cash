@@ -6,13 +6,14 @@ Widget sideBarButton({
   required String text,
   required TextStyle? style,
   required String iconPath,
+  required bool isActive,
 }) {
   return Container(
     width: double.infinity,
     padding: EdgeInsets.all(16),
 
     decoration: BoxDecoration(
-      color: AppColors.accent,
+      color: isActive ? AppColors.accent : Colors.transparent,
       borderRadius: BorderRadius.circular(12),
     ),
     child: Row(
