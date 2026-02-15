@@ -1,0 +1,62 @@
+[
+  {
+    "idMenu": "123123",
+    "name": "Nasi Goreng Spesial",
+    "sellPrice": "25000",
+    "capitalPrice": "15000",
+    "uomPrice": "Rp",
+    "status": "1",
+    "groupName": "Makanan",
+    "image": "",
+    "createdAt": "",
+    "updatedAt": ""
+  },
+  {
+    "idMenu": "43122423",
+    "name": "Mie Ayam",
+    "sellPrice": "20000",
+    "capitalPrice": "12000",
+    "uomPrice": "Rp",
+    "status": "1",
+    "groupName": "Makanan",
+    "image": "",
+    "createdAt": "",
+    "updatedAt": ""
+  },
+  {
+    "idMenu": "12331324",
+    "name": "Es Teh Manis",
+    "sellPrice": "8000",
+    "capitalPrice": "3000",
+    "uomPrice": "Rp",
+    "status": "1",
+    "groupName": "Minuman",
+    "image": "",
+    "createdAt": "",
+    "updatedAt": ""
+  },
+  {
+    "idMenu": "5435234",
+    "name": "Kopi Hitam",
+    "sellPrice": "12000",
+    "capitalPrice": "5000",
+    "uomPrice": "Rp",
+    "status": "0",
+    "groupName": "Minuman",
+    "image": "",
+    "createdAt": "",
+    "updatedAt": ""
+  },
+  {
+    "idMenu": "23554",
+    "name": "Ayam Geprek",
+    "sellPrice": "30000",
+    "capitalPrice": "18000",
+    "uomPrice": "Rp",
+    "status": "1",
+    "groupName": "Makanan",
+    "image": "",
+    "createdAt": "",
+    "updatedAt": ""
+  }
+]

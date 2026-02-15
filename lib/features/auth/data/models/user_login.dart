@@ -24,7 +24,16 @@ class UserLogin implements UserLoginEntities {
 
   @override
   String? startDate;
-  
+
+  @override
+  String? address;
+
+  @override
+  String? brand;
+
+  @override
+  String? status;
+
   UserLogin({
     this.createdAt,
     this.email,
@@ -33,6 +42,9 @@ class UserLogin implements UserLoginEntities {
     this.username,
     this.activeAccount,
     this.startDate,
+    this.address,
+    this.brand,
+    this.status,
   });
 
   @override
@@ -51,6 +63,9 @@ class UserLogin implements UserLoginEntities {
     String? username,
     String? activeAccount,
     String? startDate,
+    String? address,
+    String? brand,
+    String? status,
   }) {
     return UserLogin(
       createdAt: createdAt ?? this.createdAt,
@@ -60,12 +75,15 @@ class UserLogin implements UserLoginEntities {
       username: username ?? this.username,
       activeAccount: activeAccount ?? this.activeAccount,
       startDate: startDate ?? this.startDate,
+      address: address ?? this.address,
+      brand: brand ?? this.brand,
+      status: status ?? this.status,
     );
   }
 
   @override
   String toString() {
-    return 'UserLogin(createdAt: $createdAt, email: $email, idPerangkat: $idPerangkat, password: $password, username: $username, activeAccount: $activeAccount, startDate: $startDate)';
+    return 'UserLogin(createdAt: $createdAt, email: $email, idPerangkat: $idPerangkat, password: $password, username: $username, activeAccount: $activeAccount, startDate: $startDate, address: $address, brand: $brand, status: $status)';
   }
 
   Map<String, dynamic> toMap() {
@@ -77,6 +95,9 @@ class UserLogin implements UserLoginEntities {
       'username': username,
       'activeAccount': activeAccount,
       'startDate': startDate,
+      'address': address,
+      'brand': brand,
+      'status': status,
     };
   }
 
@@ -89,6 +110,9 @@ class UserLogin implements UserLoginEntities {
       username: map['username'] != null ? map['username'] as String : null,
       activeAccount: map['activeAccount'] != null ? map['activeAccount'] as String : null,
       startDate: map['startDate'] != null ? map['startDate'] as String : null,
+      address: map['address'] != null ? map['address'] as String : null,
+      brand: map['brand'] != null ? map['brand'] as String : null,
+      status: map['status'] != null ? map['status'] as String : null,
     );
   }
 
@@ -108,7 +132,10 @@ class UserLogin implements UserLoginEntities {
       other.password == password &&
       other.username == username &&
       other.activeAccount == activeAccount &&
-      other.startDate == startDate;
+      other.startDate == startDate &&
+      other.address == address &&
+      other.brand == brand &&
+      other.status == status;
   }
 
   @override
@@ -119,6 +146,9 @@ class UserLogin implements UserLoginEntities {
       password.hashCode ^
       username.hashCode ^
       activeAccount.hashCode ^
-      startDate.hashCode;
+      startDate.hashCode ^
+      address.hashCode ^
+      brand.hashCode ^
+      status.hashCode;
   }
 }

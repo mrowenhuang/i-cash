@@ -9,6 +9,9 @@ class UserLoginEntities extends Equatable {
   String? createdAt;
   String? startDate;
   String? activeAccount;
+  String? status;
+  String? brand;
+  String? address;
 
   UserLoginEntities({
     this.username,
@@ -18,6 +21,9 @@ class UserLoginEntities extends Equatable {
     this.createdAt,
     this.startDate,
     this.activeAccount,
+    this.status,
+    this.brand,
+    this.address,
   });
 
   @override
@@ -30,5 +36,8 @@ class UserLoginEntities extends Equatable {
     createdAt,
     startDate,
     activeAccount,
+    brand,
+    address,
+    status,
   ];
 }

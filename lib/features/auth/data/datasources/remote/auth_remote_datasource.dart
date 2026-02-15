@@ -50,7 +50,7 @@ class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
   }) async {
     try {
       final ref = _firebaseDatabase.ref();
-      final snapshot = await ref.child('icash/users/$uid').get();
+      final snapshot = await ref.child('users/$uid').get();
       return Right(snapshot);
     } on FirebaseException catch (e) {
       return Left(ServerFailure(message: e.message ?? 'Get user login failed'));
@@ -67,7 +67,7 @@ class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
   }) async {
     try {
       final ref = _firebaseDatabase.ref();
-      await ref.child('icash/users/$uid').update(userLoginData.toMap());
+      await ref.child('users/$uid').update(userLoginData.toMap());
 
       return const Right(true);
     } on FirebaseException catch (e) {

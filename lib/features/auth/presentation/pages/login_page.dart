@@ -57,6 +57,31 @@ class LoginPage extends StatelessWidget {
                     padding: const EdgeInsets.all(16),
                     child: Column(
                       children: [
+                        // Row(
+                        //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        //   children: [
+
+                        //     BlocBuilder<AuthBloc, AuthState>(
+                        //       bloc: context.read<AuthBloc>(),
+                        //       builder: (context, state) {
+                        //         if (state is HaveInternetAuthState) {
+                        //           return Image.asset(
+                        //             "assets/icons/internet.png",
+                        //             height: 30,
+                        //             color: AppColors.primary,
+                        //           );
+                        //         } else {
+                        //           return Image.asset(
+                        //             "assets/icons/no-internet.png",
+                        //             height: 30,
+                        //             color: Colors.red,
+                        //           );
+                        //         }
+                        //       },
+                        //     ),
+
+                        //   ],
+                        // ),
                         Text(
                           "Masukan Akun",
                           style: AppTheme.lightTheme.textTheme.headlineSmall
@@ -93,7 +118,7 @@ class LoginPage extends StatelessWidget {
                             if (state is FailedAuthLoginState) {
                               showWarningSheet(state.message);
                             } else if (state is SuccessAuthLoginState) {
-                              Get.offAll(() => DashboardPage());
+                              Get.offAll(() => DashboardPage(userloginData: state.userLogin));
                             }
                           },
 
@@ -107,20 +132,43 @@ class LoginPage extends StatelessWidget {
                                 ),
                               );
                             } else {
-                              return ElevatedButton.icon(
-                                onPressed: () {
-                                  var data = hashPassword(passC.text);
-                                  print(data);
-                                  context.read<AuthBloc>().add(
-                                    LoginClickAuthEvent(
-                                      email: emailC.text.trim(),
-                                      password: passC.text.trim(),
-                                    ),
-                                  );
-                                },
-                                label: Text("Masuk"),
-                                icon: Icon(Icons.login),
-                              );
+                              if (state is HaveInternetAuthState) {
+                                return ElevatedButton.icon(
+                                  onPressed: () {
+                                    context.read<AuthBloc>().add(
+                                      CheckInternetAuthEvent(),
+                                    );
+                                    var data = hashPassword(passC.text);
+                                    print(data);
+                                    context.read<AuthBloc>().add(
+                                      LoginClickAuthEvent(
+                                        email: emailC.text.trim(),
+                                        password: passC.text.trim(),
+                                      ),
+                                    );
+                                  },
+                                  label: Text("Masuk"),
+                                  icon: Icon(Icons.login),
+                                );
+                              } else {
+                                return ElevatedButton.icon(
+                                  onPressed: () {
+                                    context.read<AuthBloc>().add(
+                                      CheckInternetAuthEvent(),
+                                    );
+                                    var data = hashPassword(passC.text);
+                                    print(data);
+                                    context.read<AuthBloc>().add(
+                                      LoginOfflineClickAuthEvent(
+                                        email: emailC.text.trim(),
+                                        password: passC.text.trim(),
+                                      ),
+                                    );
+                                  },
+                                  label: Text("Masuk"),
+                                  icon: Icon(Icons.login),
+                                );
+                              }
                             }
                           },
                         ),

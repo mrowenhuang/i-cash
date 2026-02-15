@@ -1,7 +1,12 @@
 {
-    "username": "demo-kasir",
-    "email": "user123@icash.com",
-    "idPerangkat" : "",
-    "password": "a5a1a33cae26a0d17aef253a92d88b4510ecea6cc6a8d31b263d1035a3076dfa",
-    "createdAt": "2026-02-13"
+  "activeAccount": "30",
+  "address": "",
+  "brand": "my shop",
+  "createdAt": "2026-02-13",
+  "email": "user123@icash.com",
+  "idPerangkat": "UP1A.231005.007",
+  "password": "5332ee31bb596af7d4b69b48be5f4ea24b1076314c61ebfb55b8e46f1ae431c0",
+  "startDate": "2026-02-13",
+  "status": "1",
+  "username": "demo-kasir"
 }

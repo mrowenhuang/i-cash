@@ -6,3 +6,12 @@ abstract class MenuEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
+
+final class GetMenuDataEvent extends MenuEvent {}
+
+final class ChangeTabMenuEvent extends MenuEvent {
+  final Map<String, List<MenuEntities>> groupedMenu;
+  final int index;
+
+  const ChangeTabMenuEvent({required this.groupedMenu, required this.index});
+}

@@ -18,11 +18,7 @@ Widget sideBarButton({
     ),
     child: Row(
       children: [
-        Image.asset(
-          iconPath,
-          color: AppColors.primaryDark,
-          height: 24,
-        ),
+        Image.asset(iconPath, color: AppColors.primaryDark, height: 24),
         SizedBox(width: 15),
         Text(text, style: style),
       ],

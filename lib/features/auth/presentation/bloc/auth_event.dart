@@ -14,5 +14,14 @@ final class LoginClickAuthEvent extends AuthEvent {
   const LoginClickAuthEvent({required this.email, required this.password});
 }
 
+final class LoginOfflineClickAuthEvent extends AuthEvent {
+  final String email;
+  final String password;
 
+  const LoginOfflineClickAuthEvent({
+    required this.email,
+    required this.password,
+  });
+}
 
+final class CheckInternetAuthEvent extends AuthEvent {}

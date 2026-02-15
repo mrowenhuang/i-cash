@@ -3,13 +3,18 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:i_cash/common/error/failure.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:i_cash/features/auth/data/models/user_login.dart';
+import 'package:i_cash/features/auth/domain/entities/user_login_entities.dart';
 
 abstract class AuthRepositories {
   Future<Either<ServerFailure, UserCredential>> loginUser({
     required String email,
     required String password,
   });
-  Future<Either<ServerFailure, UserLogin>> readLoginUser({
+  Future<Either<ServerFailure, UserLoginEntities>> loginUserOffline({
+    required String email,
+    required String password,
+  });
+  Future<Either<ServerFailure, UserLoginEntities>> readLoginUser({
     required String uid,
     required String email,
     required String password,

@@ -3,9 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_x/get.dart';
+import 'package:i_cash/common/db/local_database.dart';
 import 'package:i_cash/common/theme/app_theme.dart';
+import 'package:i_cash/core/intern/permission.dart';
 import 'package:i_cash/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:i_cash/features/auth/presentation/pages/login_page.dart';
+import 'package:i_cash/features/menu/presentation/bloc/menu_bloc.dart';
+import 'package:i_cash/features/setting/presentation/bloc/setting_bloc.dart';
 import 'package:i_cash/firebase_options.dart';
 import 'package:i_cash/initialize.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -21,6 +25,8 @@ void main() async {
   ]);
   await SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  // await requestStoragePermission();
+  await LocalDatabase.instance.database;
   runApp(const MyApp());
 }
 
@@ -30,7 +36,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-      providers: [BlocProvider(create: (context) => sl<AuthBloc>())],
+      providers: [
+        BlocProvider(
+          create: (context) => sl<AuthBloc>()..add(CheckInternetAuthEvent()),
+        ),
+        BlocProvider(create: (context) => sl<SettingBloc>()),
+        BlocProvider(create: (context) => sl<MenuBloc>()),
+      ],
       child: GetMaterialApp(
         title: 'i-cash',
         theme: AppTheme.lightTheme,
