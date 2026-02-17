@@ -39,6 +39,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         emit(FailedAuthLoginState(message: failure.message));
       },
       (response) async {
+
         var response2 = await _authReadLoginData.call(
           uid: response.user!.uid,
           email: event.email,
@@ -62,7 +63,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     Emitter<AuthState> emit,
   ) async {
     emit(LoadingInternetAuthState());
-    
+
     final bool isConnected = await InternetConnection().hasInternetAccess;
     if (isConnected) {
       emit(HaveInternetAuthState(isConnected: true));

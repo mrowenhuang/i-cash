@@ -6,6 +6,8 @@ import 'package:i_cash/features/setting/data/datasources/local/setting_local_dat
 import 'package:i_cash/features/setting/data/datasources/remote/setting_remote_datasource.dart';
 import 'package:i_cash/features/menu/data/models/menu_model.dart';
 import 'package:i_cash/features/menu/domain/entities/menu_entities.dart';
+import 'package:i_cash/features/setting/data/models/tax_model.dart';
+import 'package:i_cash/features/setting/domain/entities/tax_entites.dart';
 import 'package:i_cash/features/setting/domain/repositories/setting_repositories.dart';
 
 class SettingReposiotriesImpl implements SettingRepositories {
@@ -78,6 +80,40 @@ class SettingReposiotriesImpl implements SettingRepositories {
       return left(
         ServerFailure(message: "Error saat sinkronisasi menu: ${e.toString()}"),
       );
+    }
+  }
+
+  @override
+  Future<Either<ServerFailure, String>> addTaxToLocal({
+    required TaxEntites taxData,
+  }) async {
+    try {
+      final response = await _settingLocalDatasource.insertTaxDataToLocal(
+        taxData: TaxModel.fromEntity(taxData),
+      );
+
+      if (response) {
+        return right("Data Berhasil ditambahkan");
+      } else {
+        return left(ServerFailure(message: "Data gagal ditambahkan"));
+      }
+    } catch (e) {
+      return left(ServerFailure(message: "Terjadi kesalahan $e"));
+    }
+  }
+
+  @override
+  Future<Either<ServerFailure, List<TaxEntites>>> getTaxFromLocal() async {
+    try {
+      final response = await _settingLocalDatasource.getTaxDataFromLocal();
+
+      if (response != null) {
+        return right(response);
+      } else {
+        return left(ServerFailure(message: "Tidak ada data"));
+      }
+    } catch (e) {
+      return left(ServerFailure(message: "Terjadi kesalahan $e"));
     }
   }
 }

@@ -26,6 +26,8 @@ class AuthRepositoriesImpl implements AuthRepositories {
         password: password,
       );
 
+      print(response);
+
       return response;
     } on FirebaseAuthException catch (e) {
       return Left(
@@ -88,6 +90,7 @@ class AuthRepositoriesImpl implements AuthRepositories {
         if (response == null) {
           _authLocalDatasource.insertUserLogin(userlogin: data);
         }
+
         /// sukses login
         return right(data);
       });

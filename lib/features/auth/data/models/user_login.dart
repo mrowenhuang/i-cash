@@ -33,6 +33,9 @@ class UserLogin implements UserLoginEntities {
 
   @override
   String? status;
+  
+  @override
+  String? userRole;
 
   UserLogin({
     this.createdAt,
@@ -45,6 +48,7 @@ class UserLogin implements UserLoginEntities {
     this.address,
     this.brand,
     this.status,
+    this.userRole,
   });
 
   @override
@@ -66,6 +70,7 @@ class UserLogin implements UserLoginEntities {
     String? address,
     String? brand,
     String? status,
+    String? userRole,
   }) {
     return UserLogin(
       createdAt: createdAt ?? this.createdAt,
@@ -78,12 +83,13 @@ class UserLogin implements UserLoginEntities {
       address: address ?? this.address,
       brand: brand ?? this.brand,
       status: status ?? this.status,
+      userRole: userRole ?? this.userRole,
     );
   }
 
   @override
   String toString() {
-    return 'UserLogin(createdAt: $createdAt, email: $email, idPerangkat: $idPerangkat, password: $password, username: $username, activeAccount: $activeAccount, startDate: $startDate, address: $address, brand: $brand, status: $status)';
+    return 'UserLogin(createdAt: $createdAt, email: $email, idPerangkat: $idPerangkat, password: $password, username: $username, activeAccount: $activeAccount, startDate: $startDate, address: $address, brand: $brand, status: $status, userRole: $userRole)';
   }
 
   Map<String, dynamic> toMap() {
@@ -98,6 +104,7 @@ class UserLogin implements UserLoginEntities {
       'address': address,
       'brand': brand,
       'status': status,
+      'userRole': userRole,
     };
   }
 
@@ -113,6 +120,7 @@ class UserLogin implements UserLoginEntities {
       address: map['address'] != null ? map['address'] as String : null,
       brand: map['brand'] != null ? map['brand'] as String : null,
       status: map['status'] != null ? map['status'] as String : null,
+      userRole: map['userRole'] != null ? map['userRole'] as String : null,
     );
   }
 
@@ -135,7 +143,8 @@ class UserLogin implements UserLoginEntities {
       other.startDate == startDate &&
       other.address == address &&
       other.brand == brand &&
-      other.status == status;
+      other.status == status &&
+      other.userRole == userRole;
   }
 
   @override
@@ -149,6 +158,7 @@ class UserLogin implements UserLoginEntities {
       startDate.hashCode ^
       address.hashCode ^
       brand.hashCode ^
-      status.hashCode;
+      status.hashCode ^
+      userRole.hashCode;
   }
 }

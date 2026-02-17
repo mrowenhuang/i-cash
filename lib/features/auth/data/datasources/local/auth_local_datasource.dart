@@ -7,20 +7,20 @@ abstract class AuthLocalDatasource {
 }
 
 class AuthLocalDatasourceImpl implements AuthLocalDatasource {
-  final LocalDatabase localDatabase;
+  final LocalDatabase _localDatabase;
 
-  AuthLocalDatasourceImpl(this.localDatabase);
+  AuthLocalDatasourceImpl(this._localDatabase);
 
   @override
   Future<void> insertUserLogin({required UserLogin userlogin}) async {
-    localDatabase.database.then((db) async {
+    _localDatabase.database.then((db) async {
       await db.insert('users_login', userlogin.toMap());
     });
   }
   
   @override
   Future<UserLogin?> getUserLogin({required String email}) {
-    return localDatabase.database.then((db) async {
+    return _localDatabase.database.then((db) async {
       final response = await db.query(
         'users_login',
         where: 'email = ?',

@@ -8,5 +8,6 @@
   "password": "5332ee31bb596af7d4b69b48be5f4ea24b1076314c61ebfb55b8e46f1ae431c0",
   "startDate": "2026-02-13",
   "status": "1",
-  "username": "demo-kasir"
+  "username": "demo-kasir",
+  "userRole": "employee"
 }

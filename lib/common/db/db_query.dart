@@ -3,6 +3,7 @@ class DbQuery {
     CREATE TABLE users_login (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       username TEXT NULL,
+      userRole TEXT NULL,
       password TEXT NULL,
       email TEXT NULL,
       brand TEXT NULL,
@@ -28,6 +29,22 @@ class DbQuery {
     image TEXT NULL,
     createdAt TEXT NULL,
     updatedAt TEXT NULL
+  )
+  ''';
+  
+  final String table = '''
+  CREATE TABLE many_table (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    manyTable TEXT NULL
+  )
+  ''';
+  
+  final String tax = '''
+  CREATE TABLE tax (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nameTax TEXT NULL,
+    percentTax TEXT NULL,
+    activeTax TEXT NULL
   )
   ''';
 }
