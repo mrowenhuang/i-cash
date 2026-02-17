@@ -7,8 +7,17 @@ abstract class SettingEvent extends Equatable {
   List<Object> get props => [];
 }
 
-final class SyncMenuDataSettingEvent extends SettingEvent {
-  final UserLoginEntities userLoginEntities;
+final class AddTaxDataSettingEvent extends SettingEvent {
+  final String taxName;
+  final String taxPercent;
 
-  const SyncMenuDataSettingEvent(this.userLoginEntities);
+  const AddTaxDataSettingEvent(this.taxName, this.taxPercent);
+}
+
+final class GetTaxDataSettingEvent extends SettingEvent {}
+
+final class AddNumberOftableSettingEvent extends SettingEvent {
+  final String numberOfTable;
+
+  const AddNumberOftableSettingEvent(this.numberOfTable);
 }

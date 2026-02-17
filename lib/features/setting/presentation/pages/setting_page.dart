@@ -5,18 +5,16 @@ import 'package:get_x/get.dart';
 import 'package:i_cash/common/theme/app_color.dart';
 import 'package:i_cash/common/theme/app_theme.dart';
 import 'package:i_cash/core/intern/account_and_token.dart';
-import 'package:i_cash/features/auth/data/models/user_login.dart';
 import 'package:i_cash/features/auth/domain/entities/user_login_entities.dart';
-import 'package:i_cash/features/auth/presentation/bloc/auth_bloc.dart';
-import 'package:i_cash/features/setting/domain/usecases/sync_menu.dart';
 import 'package:i_cash/features/setting/presentation/bloc/setting_bloc.dart';
-import 'package:i_cash/features/setting/presentation/bloc/tax_bloc/tax_bloc.dart';
+import 'package:i_cash/features/setting/presentation/bloc/setting_menu_bloc/setting_menu_bloc.dart';
 import 'package:intl/intl.dart';
 
 class SettingPage extends StatelessWidget {
-  const SettingPage({super.key, required this.userLoginData});
+  SettingPage({super.key, required this.userLoginData});
 
   final UserLoginEntities userLoginData;
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -58,8 +56,8 @@ class SettingPage extends StatelessWidget {
               child: ListView(
                 children: [
                   /// SYNC MENU
-                  BlocBuilder<SettingBloc, SettingState>(
-                    bloc: context.read<SettingBloc>(),
+                  BlocBuilder<SettingMenuBloc, SettingMenuState>(
+                    bloc: context.read<SettingMenuBloc>(),
                     builder: (context, state) {
                       return listTileSync(
                         showResponse: state is SuccessSyncMenuDataSettingState,
@@ -67,7 +65,7 @@ class SettingPage extends StatelessWidget {
                             ? const CircularProgressIndicator()
                             : IconButton(
                                 onPressed: () {
-                                  context.read<SettingBloc>().add(
+                                  context.read<SettingMenuBloc>().add(
                                     SyncMenuDataSettingEvent(userLoginData),
                                   );
                                 },
@@ -112,10 +110,12 @@ class SettingPage extends StatelessWidget {
                   const SizedBox(height: 12),
 
                   /// TAX
-                  BlocConsumer<TaxBloc, TaxState>(
-                    bloc: context.read<TaxBloc>(),
+                  BlocConsumer<SettingBloc, SettingState>(
+                    bloc: context.read<SettingBloc>(),
                     listener: (context, state) {
                       if (state is SuccessAddTaxDataSettingState) {
+                        taxPercentC.clear();
+                        nameTaxc.clear();
                         Get.showSnackbar(
                           GetSnackBar(
                             snackPosition: SnackPosition.top,
@@ -174,7 +174,7 @@ class SettingPage extends StatelessWidget {
                           ),
                           color: AppColors.primaryDark,
                           onPressed: () async {
-                            context.read<TaxBloc>().add(
+                            context.read<SettingBloc>().add(
                               GetTaxDataSettingEvent(),
                             );
 
@@ -182,117 +182,182 @@ class SettingPage extends StatelessWidget {
                               Padding(
                                 padding: const EdgeInsets.all(16),
                                 child: SingleChildScrollView(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      TextField(
-                                        controller: nameTaxc,
-                                        decoration: InputDecoration(
-                                          prefixIcon: Icon(
-                                            Icons.abc,
-                                            color: AppColors.primary,
+                                  child: Form(
+                                    key: _formKey,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        TextFormField(
+                                          controller: nameTaxc,
+                                          decoration: InputDecoration(
+                                            prefixIcon: Icon(
+                                              Icons.abc,
+                                              color: AppColors.primary,
+                                            ),
+                                            hintText: "Nama",
                                           ),
-                                          hintText: "Nama",
-                                        ),
-                                      ),
-                                      const SizedBox(height: 15),
-                                      TextField(
-                                        controller: taxPercentC,
-                                        keyboardType: TextInputType.number,
-                                        decoration: InputDecoration(
-                                          prefixIcon: Icon(
-                                            Icons.percent,
-                                            color: AppColors.primary,
-                                          ),
-                                          hintText: "Persen",
-                                        ),
-                                      ),
-                                      const SizedBox(height: 15),
-                                      Align(
-                                        alignment: Alignment.centerRight,
-                                        child: ElevatedButton.icon(
-                                          icon: Icon(
-                                            Icons.add,
-                                            size: 20,
-                                            color: AppColors.primary,
-                                          ),
-                                          onPressed: () {
-                                            context.read<TaxBloc>().add(
-                                              AddTaxDataSettingEvent(
-                                                nameTaxc.text.trim(),
-                                                taxPercentC.text.trim(),
-                                              ),
-                                            );
+                                          validator: (value) {
+                                            if (value == null ||
+                                                value.trim().isEmpty) {
+                                              return "Nama wajib diisi";
+                                            }
+                                            return null;
                                           },
-                                          label: Text(
-                                            "Tambah",
-                                            style: AppTheme
-                                                .lightTheme
-                                                .textTheme
-                                                .titleMedium
-                                                ?.copyWith(
-                                                  color: AppColors.primary,
-                                                ),
-                                          ),
                                         ),
-                                      ),
-                                      Text(
-                                        "Pajak / Service yang sudah ada",
-                                        style: AppTheme
-                                            .lightTheme
-                                            .textTheme
-                                            .headlineSmall,
-                                      ),
-                                      const SizedBox(height: 15),
+                                        const SizedBox(height: 15),
+                                        TextFormField(
+                                          controller: taxPercentC,
+                                          keyboardType: TextInputType.number,
+                                          decoration: InputDecoration(
+                                            prefixIcon: Icon(
+                                              Icons.percent,
+                                              color: AppColors.primary,
+                                            ),
+                                            hintText: "Persen",
+                                          ),
+                                          validator: (value) {
+                                            if (value == null ||
+                                                value.trim().isEmpty) {
+                                              return "Persen wajib diisi";
+                                            }
 
-                                      if (state
-                                          is LoadingGetTaxDataSettingState)
-                                        const Center(
-                                          child: CircularProgressIndicator(),
-                                        )
-                                      else if (state
-                                          is SuccessGetTaxDataSettingState)
-                                        ListView.builder(
-                                          shrinkWrap: true,
-                                          physics:
-                                              const NeverScrollableScrollPhysics(),
-                                          itemCount: (state).taxEntites.length,
-                                          itemBuilder: (_, index) {
-                                            return Padding(
-                                              padding: const EdgeInsets.only(
-                                                bottom: 10,
-                                              ),
-                                              child: Material(
-                                                elevation: 2,
-                                                borderRadius:
-                                                    BorderRadius.circular(8),
-                                                child: ListTile(
-                                                  title: const Text("name"),
-                                                  subtitle: const Text(
-                                                    "percent",
-                                                  ),
-                                                  tileColor:
-                                                      AppColors.cardBackground,
-                                                  trailing: Transform.scale(
-                                                    scale: .8,
-                                                    child: CupertinoSwitch(
-                                                      value: true,
-                                                      activeColor:
-                                                          AppColors.accent,
-                                                      onChanged: (_) {},
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
+                                            final number = double.tryParse(
+                                              value,
                                             );
+                                            if (number == null) {
+                                              return "Harus berupa angka";
+                                            }
+
+                                            if (number < 0) {
+                                              return "Tidak boleh negatif";
+                                            }
+
+                                            if (number > 100) {
+                                              return "Maksimal 100%";
+                                            }
+
+                                            return null;
                                           },
-                                        )
-                                      else
-                                        const Center(
-                                          child: Text("Tidak ada data"),
                                         ),
-                                    ],
+                                        const SizedBox(height: 15),
+                                        Align(
+                                          alignment: Alignment.centerRight,
+                                          child: ElevatedButton.icon(
+                                            icon: Icon(
+                                              Icons.add,
+                                              size: 20,
+                                              color: AppColors.primary,
+                                            ),
+                                            onPressed: () {
+                                              if (_formKey.currentState!
+                                                  .validate()) {
+                                                context.read<SettingBloc>().add(
+                                                  AddTaxDataSettingEvent(
+                                                    nameTaxc.text.trim(),
+                                                    taxPercentC.text.trim(),
+                                                  ),
+                                                );
+                                              }
+                                            },
+                                            label: Text(
+                                              "Tambah",
+                                              style: AppTheme
+                                                  .lightTheme
+                                                  .textTheme
+                                                  .titleMedium
+                                                  ?.copyWith(
+                                                    color: AppColors.primary,
+                                                  ),
+                                            ),
+                                          ),
+                                        ),
+                                        Text(
+                                          "Pajak / Service yang sudah ada",
+                                          style: AppTheme
+                                              .lightTheme
+                                              .textTheme
+                                              .headlineSmall,
+                                        ),
+                                        const SizedBox(height: 15),
+                                        BlocBuilder<SettingBloc, SettingState>(
+                                          bloc: context.read<SettingBloc>(),
+                                          builder: (context, state) {
+                                            if (state
+                                                is LoadingGetTaxDataSettingState) {
+                                              return Center(
+                                                child:
+                                                    CircularProgressIndicator(),
+                                              );
+                                            } else if (state
+                                                is SuccessGetTaxDataSettingState) {
+                                              return ListView.builder(
+                                                shrinkWrap: true,
+                                                physics:
+                                                    const NeverScrollableScrollPhysics(),
+                                                itemCount:
+                                                    (state).taxEntites.length,
+                                                itemBuilder: (_, index) {
+                                                  final data =
+                                                      state.taxEntites[index];
+
+                                                  return Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                          bottom: 10,
+                                                          right: 10,
+                                                          left: 10,
+                                                        ),
+                                                    child: Material(
+                                                      elevation: 2,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                            8,
+                                                          ),
+                                                      child: ListTile(
+                                                        title: Text(
+                                                          data.nameTax
+                                                              .toString(),
+                                                        ),
+                                                        subtitle: Text(
+                                                          "Nominal potongan ${data.percentTax.toString()} %",
+                                                        ),
+                                                        shape: RoundedRectangleBorder(
+                                                          borderRadius:
+                                                              BorderRadius.circular(
+                                                                8,
+                                                              ),
+                                                        ),
+                                                        tileColor: AppColors
+                                                            .cardBackground,
+                                                        trailing: Transform.scale(
+                                                          scale: .8,
+                                                          child: CupertinoSwitch(
+                                                            value:
+                                                                data.activeTax ==
+                                                                    '1'
+                                                                ? true
+                                                                : false,
+                                                            activeColor:
+                                                                AppColors
+                                                                    .accent,
+                                                            onChanged: (_) {},
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  );
+                                                },
+                                              );
+                                            } else {
+                                              return Center(
+                                                child: Text("Tidak ada data"),
+                                              );
+                                            }
+                                          },
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
@@ -310,17 +375,27 @@ class SettingPage extends StatelessWidget {
 
                   const SizedBox(height: 12),
 
-                  listTileSync(
-                    color: Colors.green,
-                    responseMessage: '',
-                    showResponse: false,
-                    trailing: Icon(
-                      Icons.table_bar_rounded,
-                      color: AppColors.primaryDark,
-                      size: 30,
-                    ),
-                    title: "Tambah Jumlah Meja",
-                    subtitle: "*Lakukan penyesuaian untuk jumlah meja tersedia",
+                  BlocConsumer<SettingBloc, SettingState>(
+                    bloc: context.read<SettingBloc>(),
+                    listener: (context, state) {
+                      // TODO: implement listener
+                    },
+                    builder: (context, state) {
+                      return listTileSync(
+                        color: Colors.green,
+                        responseMessage: '',
+                        showResponse: false,
+                        trailing: Icon(
+                          Icons.table_bar_rounded,
+                          color: AppColors.primaryDark,
+                          size: 30,
+                        ),
+                        
+                        title: "Tambah Jumlah Meja",
+                        subtitle:
+                            "*Lakukan penyesuaian untuk jumlah meja tersedia",
+                      );
+                    },
                   ),
 
                   const SizedBox(height: 12),

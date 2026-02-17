@@ -116,4 +116,22 @@ class SettingReposiotriesImpl implements SettingRepositories {
       return left(ServerFailure(message: "Terjadi kesalahan $e"));
     }
   }
+
+  @override
+  Future<Either<ServerFailure, String>> addTableToLocal({
+    required String numberOfTable,
+  }) async {
+    try {
+      final response = await _settingLocalDatasource
+          .insertNumberOfTableDataToLocal(numberOfTable: numberOfTable);
+
+      if (response) {
+        return right("Data Berhasil ditambahkan");
+      } else {
+        return left(ServerFailure(message: "Data gagal ditambahkan"));
+      }
+    } catch (e) {
+      return left(ServerFailure(message: "Terjadi kesalahan $e"));
+    }
+  }
 }

@@ -6,6 +6,7 @@ abstract class SettingLocalDatasource {
   Future<bool> insertMenuDataToLocal({required List<MenuModel> menuData});
   Future<bool> clearMenuDataFromLocal();
   Future<bool> insertTaxDataToLocal({required TaxModel taxData});
+  Future<bool> insertNumberOfTableDataToLocal({required String numberOfTable});
   Future<List<TaxModel>?> getTaxDataFromLocal();
 }
 
@@ -80,6 +81,22 @@ class SettingLocalDatasourceImpl implements SettingLocalDatasource {
     } catch (e) {
       print("get tax error: $e");
       return null;
+    }
+  }
+
+  @override
+  Future<bool> insertNumberOfTableDataToLocal({
+    required String numberOfTable,
+  }) async {
+    try {
+      final db = await _localDatabase.database;
+
+      await db.insert('many_table', {'many_table': numberOfTable});
+
+      return true;
+    } catch (e) {
+      print("insert many_table error: $e");
+      return false;
     }
   }
 }

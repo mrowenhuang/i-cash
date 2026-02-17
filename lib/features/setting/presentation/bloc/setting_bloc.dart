@@ -2,38 +2,79 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:get_x/get_state_manager/src/rx_flutter/rx_getx_widget.dart';
-import 'package:i_cash/features/auth/domain/entities/user_login_entities.dart';
 import 'package:i_cash/features/setting/domain/entities/tax_entites.dart';
+import 'package:i_cash/features/setting/domain/usecases/add_table.dart';
 import 'package:i_cash/features/setting/domain/usecases/add_tax.dart';
 import 'package:i_cash/features/setting/domain/usecases/get_tax.dart';
-import 'package:i_cash/features/setting/domain/usecases/sync_menu.dart';
 
 part 'setting_event.dart';
 part 'setting_state.dart';
 
 class SettingBloc extends Bloc<SettingEvent, SettingState> {
-  final SyncMenu _syncMenu;
-
-  SettingBloc(this._syncMenu)
+  final AddTax _addTax;
+  final GetTax _getTax;
+  final AddTable _addTable;
+  SettingBloc(this._addTax, this._getTax, this._addTable)
     : super(SettingInitial()) {
-    on<SyncMenuDataSettingEvent>(syncMenuDataSettingEvent);
+    on<AddTaxDataSettingEvent>(addTaxDataSettingEvent);
+    on<GetTaxDataSettingEvent>(getTaxDataSettingEvent);
+    on<AddNumberOftableSettingEvent>(addNumberOftableSettingEvent);
   }
 
-  FutureOr<void> syncMenuDataSettingEvent(
-    SyncMenuDataSettingEvent event,
+  FutureOr<void> addTaxDataSettingEvent(
+    AddTaxDataSettingEvent event,
     Emitter<SettingState> emit,
   ) async {
-    emit(LoadingSyncMenuDataSettingState());
-    var response = await _syncMenu.call(userLoginData: event.userLoginEntities);
+    emit(LoadingAddTaxDataSettingState());
+
+    final response = await _addTax.call(
+      taxName: event.taxName,
+      taxPercent: event.taxPercent,
+    );
+
+    await response.fold(
+      (l) async {
+        emit(FailedAddTaxDataSettingState(l.message));
+      },
+      (r) async {
+        emit(SuccessAddTaxDataSettingState(r));
+        await getTaxDataSettingEvent(GetTaxDataSettingEvent(), emit);
+      },
+    );
+  }
+
+  FutureOr<void> getTaxDataSettingEvent(
+    GetTaxDataSettingEvent event,
+    Emitter<SettingState> emit,
+  ) async {
+    emit(LoadingGetTaxDataSettingState());
+    final response = await _getTax.call();
 
     response.fold(
       (l) {
-        print(l.message);
-        emit(FailedSyncMenuDataSettingState(l.message));
+        emit(FailedGetTaxDataSettingState(l.message));
       },
       (r) {
-        emit(SuccessSyncMenuDataSettingState(r));
+        emit(SuccessGetTaxDataSettingState(r));
+      },
+    );
+  }
+
+  FutureOr<void> addNumberOftableSettingEvent(
+    AddNumberOftableSettingEvent event,
+    Emitter<SettingState> emit,
+  ) async {
+    emit(LoadingAddTableDataSettingState());
+
+    final response = await _addTable.call(numberOfTable: event.numberOfTable);
+
+    await response.fold(
+      (l) async {
+        emit(FailedAddTableDataSettingState(l.message));
+      },
+      (r) async {
+        emit(SuccessAddTableDataSettingState(r));
+        // await getTaxDataSettingEvent(GetTaxDataSettingEvent(), emit);
       },
     );
   }

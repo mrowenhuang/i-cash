@@ -19,11 +19,12 @@ import 'package:i_cash/features/setting/data/datasources/local/setting_local_dat
 import 'package:i_cash/features/setting/data/datasources/remote/setting_remote_datasource.dart';
 import 'package:i_cash/features/setting/data/repositories/setting_reposiotries_impl.dart';
 import 'package:i_cash/features/setting/domain/repositories/setting_repositories.dart';
+import 'package:i_cash/features/setting/domain/usecases/add_table.dart';
 import 'package:i_cash/features/setting/domain/usecases/add_tax.dart';
 import 'package:i_cash/features/setting/domain/usecases/get_tax.dart';
 import 'package:i_cash/features/setting/domain/usecases/sync_menu.dart';
 import 'package:i_cash/features/setting/presentation/bloc/setting_bloc.dart';
-import 'package:i_cash/features/setting/presentation/bloc/tax_bloc/tax_bloc.dart';
+import 'package:i_cash/features/setting/presentation/bloc/setting_menu_bloc/setting_menu_bloc.dart';
 
 final sl = GetIt.instance;
 
@@ -57,6 +58,7 @@ Future<void> initializeDependecies() async {
   sl.registerLazySingleton(() => SyncMenu(sl()));
   sl.registerLazySingleton(() => AddTax(sl()));
   sl.registerLazySingleton(() => GetTax(sl()));
+  sl.registerLazySingleton(() => AddTable(sl()));
   sl.registerLazySingleton(() => GetMenuData(sl()));
 
   // repositories
@@ -70,7 +72,7 @@ Future<void> initializeDependecies() async {
 
   // blocs
   sl.registerFactory(() => AuthBloc(sl(), sl(), sl()));
-  sl.registerFactory(() => SettingBloc(sl()));
-  sl.registerFactory(() => TaxBloc(sl(),sl()));
+  sl.registerFactory(() => SettingMenuBloc(sl()));
+  sl.registerFactory(() => SettingBloc(sl(),sl()));
   sl.registerFactory(() => MenuBloc(sl()));
 }

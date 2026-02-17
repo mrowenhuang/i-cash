@@ -9,16 +9,44 @@ abstract class SettingState extends Equatable {
 
 class SettingInitial extends SettingState {}
 
-final class LoadingSyncMenuDataSettingState extends SettingState {}
+final class LoadingAddTaxDataSettingState extends SettingState {}
 
-final class SuccessSyncMenuDataSettingState extends SettingState {
+final class SuccessAddTaxDataSettingState extends SettingState {
   final String message;
 
-  const SuccessSyncMenuDataSettingState(this.message);
+  const SuccessAddTaxDataSettingState(this.message);
 }
 
-final class FailedSyncMenuDataSettingState extends SettingState {
+final class FailedAddTaxDataSettingState extends SettingState {
   final String message;
 
-  const FailedSyncMenuDataSettingState(this.message);
+  const FailedAddTaxDataSettingState(this.message);
+}
+
+final class LoadingGetTaxDataSettingState extends SettingState {}
+
+final class SuccessGetTaxDataSettingState extends SettingState {
+  final List<TaxEntites> taxEntites;
+
+  const SuccessGetTaxDataSettingState(this.taxEntites);
+}
+
+final class FailedGetTaxDataSettingState extends SettingState {
+  final String message;
+
+  const FailedGetTaxDataSettingState(this.message);
+}
+
+final class LoadingAddTableDataSettingState extends SettingState {}
+
+final class SuccessAddTableDataSettingState extends SettingState {
+  final String taxEntites;
+
+  const SuccessAddTableDataSettingState(this.taxEntites);
+}
+
+final class FailedAddTableDataSettingState extends SettingState {
+  final String message;
+
+  const FailedAddTableDataSettingState(this.message);
 }
