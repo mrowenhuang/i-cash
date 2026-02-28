@@ -37,16 +37,58 @@ final class FailedGetTaxDataSettingState extends SettingState {
   const FailedGetTaxDataSettingState(this.message);
 }
 
+final class LoadingDeleteTaxDataSettingState extends SettingState {}
+
+final class SuccessDeleteTaxDataSettingState extends SettingState {
+  final String message;
+
+  const SuccessDeleteTaxDataSettingState(this.message);
+}
+
+final class FailedDeleteTaxDataSettingState extends SettingState {
+  final String message;
+
+  const FailedDeleteTaxDataSettingState(this.message);
+}
+
 final class LoadingAddTableDataSettingState extends SettingState {}
 
 final class SuccessAddTableDataSettingState extends SettingState {
-  final String taxEntites;
+  final String message;
 
-  const SuccessAddTableDataSettingState(this.taxEntites);
+  const SuccessAddTableDataSettingState(this.message);
 }
 
 final class FailedAddTableDataSettingState extends SettingState {
   final String message;
 
   const FailedAddTableDataSettingState(this.message);
+}
+
+final class LoadingGetTableDataSettingState extends SettingState {}
+
+final class SuccessGetTableDataSettingState extends SettingState {
+  final String tableDate;
+
+  const SuccessGetTableDataSettingState(this.tableDate);
+}
+
+final class FailedGetTableDataSettingState extends SettingState {
+  final String message;
+
+  const FailedGetTableDataSettingState(this.message);
+}
+
+final class LoadingDeleteTableDataSettingState extends SettingState {}
+
+final class SuccessDeleteTableDataSettingState extends SettingState {
+  final String message;
+
+  const SuccessDeleteTableDataSettingState(this.message);
+}
+
+final class FailedDeleteTableDataSettingState extends SettingState {
+  final String message;
+
+  const FailedDeleteTableDataSettingState(this.message);
 }

@@ -11,11 +11,6 @@ class MenuInitial extends MenuState {}
 
 final class LoadingMenuState extends MenuState {}
 
-// final class SuccessMenuState extends MenuState {
-//   final List<MenuEntities> menuData;
-
-//   const SuccessMenuState({required this.menuData});
-// }
 class SuccessMenuState extends MenuState {
   final List<MenuEntities> menuData;
   final Map<String, List<MenuEntities>> groupedMenu;

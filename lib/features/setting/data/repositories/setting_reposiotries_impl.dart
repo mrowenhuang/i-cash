@@ -134,4 +134,57 @@ class SettingReposiotriesImpl implements SettingRepositories {
       return left(ServerFailure(message: "Terjadi kesalahan $e"));
     }
   }
+
+  @override
+  Future<Either<ServerFailure, String>> getTableFromLocal() async {
+    try {
+      final response = await _settingLocalDatasource.getTableDataFromLocal();
+
+      if (response != null) {
+        return right(response);
+      } else {
+        return left(ServerFailure(message: "Tidak ada data"));
+      }
+    } catch (e) {
+      return left(ServerFailure(message: "Terjadi kesalahan $e"));
+    }
+  }
+
+  @override
+  Future<Either<ServerFailure, String>> deleteTableFromLocal({
+    required String key,
+  }) async {
+    try {
+      final response = await _settingLocalDatasource.deleteTableDataFromLocal(
+        key: key,
+      );
+
+      if (response) {
+        return right("Data Berhasil dihapus");
+      } else {
+        return left(ServerFailure(message: "Data gagal dihapus"));
+      }
+    } catch (e) {
+      return left(ServerFailure(message: "Terjadi kesalahan $e"));
+    }
+  }
+
+  @override
+  Future<Either<ServerFailure, String>> deleteTaxFromLocal({
+    required String key,
+  }) async {
+    try {
+      final response = await _settingLocalDatasource.deleteTaxDataFromLocal(
+        key: key,
+      );
+
+      if (response) {
+        return right("Data Berhasil dihapus");
+      } else {
+        return left(ServerFailure(message: "Data gagal dihapus"));
+      }
+    } catch (e) {
+      return left(ServerFailure(message: "Terjadi kesalahan $e"));
+    }
+  }
 }

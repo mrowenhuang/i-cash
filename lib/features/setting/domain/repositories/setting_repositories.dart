@@ -12,7 +12,14 @@ abstract class SettingRepositories {
     required TaxEntites taxData,
   });
   Future<Either<ServerFailure, List<TaxEntites>>> getTaxFromLocal();
+  Future<Either<ServerFailure, String>> deleteTaxFromLocal({
+    required String key,
+  });
   Future<Either<ServerFailure, String>> addTableToLocal({
-    required String numberOfTable
+    required String numberOfTable,
+  });
+  Future<Either<ServerFailure, String>> getTableFromLocal();
+  Future<Either<ServerFailure, String>> deleteTableFromLocal({
+    required String key,
   });
 }

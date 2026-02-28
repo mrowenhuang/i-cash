@@ -15,12 +15,21 @@ import 'package:i_cash/features/menu/data/repositories/menu_repositories_impl.da
 import 'package:i_cash/features/menu/domain/repositories/menu_repositories.dart';
 import 'package:i_cash/features/menu/domain/usecases/get_menu_data.dart';
 import 'package:i_cash/features/menu/presentation/bloc/menu_bloc.dart';
+import 'package:i_cash/features/order_menu/data/datasources/local/order_menu_local_datasource.dart';
+import 'package:i_cash/features/order_menu/data/repositories/order_menu_repositories_impl.dart';
+import 'package:i_cash/features/order_menu/domain/repositories/order_menu_repositories.dart';
+import 'package:i_cash/features/order_menu/domain/usecases/get_menu_makanan.dart';
+import 'package:i_cash/features/order_menu/domain/usecases/get_menu_minuman.dart';
+import 'package:i_cash/features/order_menu/presentation/bloc/order_menu_bloc.dart';
 import 'package:i_cash/features/setting/data/datasources/local/setting_local_datasource.dart';
 import 'package:i_cash/features/setting/data/datasources/remote/setting_remote_datasource.dart';
 import 'package:i_cash/features/setting/data/repositories/setting_reposiotries_impl.dart';
 import 'package:i_cash/features/setting/domain/repositories/setting_repositories.dart';
 import 'package:i_cash/features/setting/domain/usecases/add_table.dart';
 import 'package:i_cash/features/setting/domain/usecases/add_tax.dart';
+import 'package:i_cash/features/setting/domain/usecases/delete_table.dart';
+import 'package:i_cash/features/setting/domain/usecases/delete_tax.dart';
+import 'package:i_cash/features/setting/domain/usecases/get_table.dart';
 import 'package:i_cash/features/setting/domain/usecases/get_tax.dart';
 import 'package:i_cash/features/setting/domain/usecases/sync_menu.dart';
 import 'package:i_cash/features/setting/presentation/bloc/setting_bloc.dart';
@@ -50,6 +59,9 @@ Future<void> initializeDependecies() async {
   sl.registerLazySingleton<MenuLocalDatasource>(
     () => MenuLocalDatasourceImpl(sl()),
   );
+  sl.registerLazySingleton<OrderMenuLocalDatasource>(
+    () => OrderMenuLocalDatasourceImpl(sl()),
+  );
 
   // usecases
   sl.registerLazySingleton(() => AuthLogin(sl()));
@@ -58,8 +70,13 @@ Future<void> initializeDependecies() async {
   sl.registerLazySingleton(() => SyncMenu(sl()));
   sl.registerLazySingleton(() => AddTax(sl()));
   sl.registerLazySingleton(() => GetTax(sl()));
+  sl.registerLazySingleton(() => DeleteTax(sl()));
   sl.registerLazySingleton(() => AddTable(sl()));
+  sl.registerLazySingleton(() => GetTable(sl()));
+  sl.registerLazySingleton(() => DeleteTable(sl()));
   sl.registerLazySingleton(() => GetMenuData(sl()));
+  sl.registerLazySingleton(() => GetMenuMakanan(sl()));
+  sl.registerLazySingleton(() => GetMenuMinuman(sl()));
 
   // repositories
   sl.registerLazySingleton<AuthRepositories>(
@@ -69,10 +86,14 @@ Future<void> initializeDependecies() async {
     () => SettingReposiotriesImpl(sl(), sl()),
   );
   sl.registerLazySingleton<MenuRepositories>(() => MenuRepositoriesImpl(sl()));
+  sl.registerLazySingleton<OrderMenuRepositories>(
+    () => OrderMenuRepositoriesImpl(sl()),
+  );
 
   // blocs
   sl.registerFactory(() => AuthBloc(sl(), sl(), sl()));
   sl.registerFactory(() => SettingMenuBloc(sl()));
-  sl.registerFactory(() => SettingBloc(sl(),sl()));
+  sl.registerFactory(() => SettingBloc(sl(), sl(), sl(), sl(), sl(), sl()));
   sl.registerFactory(() => MenuBloc(sl()));
+  sl.registerFactory(() => OrderMenuBloc(sl(), sl()));
 }

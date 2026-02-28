@@ -11,6 +11,7 @@ class DashboardViewPage extends StatelessWidget {
     final TextEditingController searchC = TextEditingController();
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [

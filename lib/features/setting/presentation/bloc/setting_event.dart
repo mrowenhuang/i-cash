@@ -16,8 +16,22 @@ final class AddTaxDataSettingEvent extends SettingEvent {
 
 final class GetTaxDataSettingEvent extends SettingEvent {}
 
+final class DeleteTaxDataSettingEvent extends SettingEvent {
+  final String key;
+
+  const DeleteTaxDataSettingEvent({required this.key});
+}
+
 final class AddNumberOftableSettingEvent extends SettingEvent {
   final String numberOfTable;
 
   const AddNumberOftableSettingEvent(this.numberOfTable);
+}
+
+final class GetTableDataSettingEvent extends SettingEvent {}
+
+final class DeleteTableDataSettingEvent extends SettingEvent {
+  final String key;
+
+  const DeleteTableDataSettingEvent({required this.key});
 }

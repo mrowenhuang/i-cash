@@ -20,8 +20,10 @@ class SettingPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final TextEditingController nameTaxc = TextEditingController();
     final TextEditingController taxPercentC = TextEditingController();
+    final TextEditingController tableC = TextEditingController();
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -109,7 +111,7 @@ class SettingPage extends StatelessWidget {
 
                   const SizedBox(height: 12),
 
-                  /// TAX
+                  /// SERVICE
                   BlocConsumer<SettingBloc, SettingState>(
                     bloc: context.read<SettingBloc>(),
                     listener: (context, state) {
@@ -146,6 +148,36 @@ class SettingPage extends StatelessWidget {
                           ),
                         );
                       } else if (state is FailedGetTaxDataSettingState) {
+                        Get.showSnackbar(
+                          GetSnackBar(
+                            snackPosition: SnackPosition.top,
+                            maxWidth: 500,
+                            borderRadius: 15,
+                            backgroundColor: AppColors.cardBackground,
+                            messageText: Text(
+                              state.message,
+                              style: AppTheme.lightTheme.textTheme.titleSmall
+                                  ?.copyWith(color: Colors.red),
+                            ),
+                            duration: const Duration(seconds: 2),
+                          ),
+                        );
+                      } else if (state is SuccessDeleteTaxDataSettingState) {
+                        Get.showSnackbar(
+                          GetSnackBar(
+                            snackPosition: SnackPosition.top,
+                            maxWidth: 500,
+                            borderRadius: 15,
+                            backgroundColor: AppColors.cardBackground,
+                            messageText: Text(
+                              state.message,
+                              style: AppTheme.lightTheme.textTheme.titleSmall
+                                  ?.copyWith(color: AppColors.ready),
+                            ),
+                            duration: const Duration(seconds: 2),
+                          ),
+                        );
+                      } else if (state is FailedDeleteTaxDataSettingState) {
                         Get.showSnackbar(
                           GetSnackBar(
                             snackPosition: SnackPosition.top,
@@ -330,19 +362,44 @@ class SettingPage extends StatelessWidget {
                                                         ),
                                                         tileColor: AppColors
                                                             .cardBackground,
-                                                        trailing: Transform.scale(
-                                                          scale: .8,
-                                                          child: CupertinoSwitch(
-                                                            value:
-                                                                data.activeTax ==
-                                                                    '1'
-                                                                ? true
-                                                                : false,
-                                                            activeColor:
-                                                                AppColors
-                                                                    .accent,
-                                                            onChanged: (_) {},
-                                                          ),
+                                                        trailing: Row(
+                                                          mainAxisSize:
+                                                              MainAxisSize.min,
+                                                          children: [
+                                                            Transform.scale(
+                                                              scale: .8,
+                                                              child: CupertinoSwitch(
+                                                                value:
+                                                                    data.activeTax ==
+                                                                    '1',
+                                                                activeColor:
+                                                                    AppColors
+                                                                        .accent,
+                                                                onChanged:
+                                                                    (_) {},
+                                                              ),
+                                                            ),
+                                                            IconButton(
+                                                              onPressed: () {
+                                                                context
+                                                                    .read<
+                                                                      SettingBloc
+                                                                    >()
+                                                                    .add(
+                                                                      DeleteTaxDataSettingEvent(
+                                                                        key: data
+                                                                            .nameTax
+                                                                            .toString(),
+                                                                      ),
+                                                                    );
+                                                              },
+                                                              icon: const Icon(
+                                                                Icons.delete,
+                                                                color:
+                                                                    Colors.red,
+                                                              ),
+                                                            ),
+                                                          ],
                                                         ),
                                                       ),
                                                     ),
@@ -374,23 +431,245 @@ class SettingPage extends StatelessWidget {
                   ),
 
                   const SizedBox(height: 12),
-
+                  // TABLE
                   BlocConsumer<SettingBloc, SettingState>(
                     bloc: context.read<SettingBloc>(),
                     listener: (context, state) {
-                      // TODO: implement listener
+                      if (state is SuccessAddTableDataSettingState) {
+                        tableC.clear();
+                        Get.showSnackbar(
+                          GetSnackBar(
+                            snackPosition: SnackPosition.top,
+                            maxWidth: 500,
+                            borderRadius: 15,
+                            backgroundColor: AppColors.cardBackground,
+                            messageText: Text(
+                              state.message,
+                              style: AppTheme.lightTheme.textTheme.titleSmall
+                                  ?.copyWith(color: AppColors.ready),
+                            ),
+                            duration: const Duration(seconds: 2),
+                          ),
+                        );
+                      } else if (state is FailedAddTableDataSettingState) {
+                        Get.showSnackbar(
+                          GetSnackBar(
+                            snackPosition: SnackPosition.top,
+                            maxWidth: 500,
+                            borderRadius: 15,
+                            backgroundColor: AppColors.cardBackground,
+                            messageText: Text(
+                              state.message,
+                              style: AppTheme.lightTheme.textTheme.titleSmall
+                                  ?.copyWith(color: Colors.red),
+                            ),
+                            duration: const Duration(seconds: 2),
+                          ),
+                        );
+                      } else if (state is FailedGetTableDataSettingState) {
+                        Get.showSnackbar(
+                          GetSnackBar(
+                            snackPosition: SnackPosition.top,
+                            maxWidth: 500,
+                            borderRadius: 15,
+                            backgroundColor: AppColors.cardBackground,
+                            messageText: Text(
+                              state.message,
+                              style: AppTheme.lightTheme.textTheme.titleSmall
+                                  ?.copyWith(color: Colors.red),
+                            ),
+                            duration: const Duration(seconds: 2),
+                          ),
+                        );
+                      } else if (state is SuccessDeleteTableDataSettingState) {
+                        Get.showSnackbar(
+                          GetSnackBar(
+                            snackPosition: SnackPosition.top,
+                            maxWidth: 500,
+                            borderRadius: 15,
+                            backgroundColor: AppColors.cardBackground,
+                            messageText: Text(
+                              state.message,
+                              style: AppTheme.lightTheme.textTheme.titleSmall
+                                  ?.copyWith(color: AppColors.ready),
+                            ),
+                            duration: const Duration(seconds: 2),
+                          ),
+                        );
+                      } else if (state is FailedDeleteTableDataSettingState) {
+                        Get.showSnackbar(
+                          GetSnackBar(
+                            snackPosition: SnackPosition.top,
+                            maxWidth: 500,
+                            borderRadius: 15,
+                            backgroundColor: AppColors.cardBackground,
+                            messageText: Text(
+                              state.message,
+                              style: AppTheme.lightTheme.textTheme.titleSmall
+                                  ?.copyWith(color: Colors.red),
+                            ),
+                            duration: const Duration(seconds: 2),
+                          ),
+                        );
+                      }
                     },
                     builder: (context, state) {
+                      print(state);
+
                       return listTileSync(
                         color: Colors.green,
                         responseMessage: '',
                         showResponse: false,
-                        trailing: Icon(
-                          Icons.table_bar_rounded,
-                          color: AppColors.primaryDark,
-                          size: 30,
+                        trailing: IconButton(
+                          icon: Icon(
+                            Icons.table_bar_rounded,
+                            color: AppColors.primaryDark,
+                            size: 30,
+                          ),
+                          onPressed: () async {
+                            context.read<SettingBloc>().add(
+                              GetTableDataSettingEvent(),
+                            );
+                            await Get.bottomSheet(
+                              Padding(
+                                padding: const EdgeInsets.all(16),
+                                child: SingleChildScrollView(
+                                  child: Form(
+                                    key: _formKey,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        TextFormField(
+                                          controller: tableC,
+                                          keyboardType: TextInputType.number,
+                                          decoration: InputDecoration(
+                                            prefixIcon: Icon(
+                                              Icons.table_bar_rounded,
+                                              color: AppColors.primary,
+                                            ),
+                                            hintText: "Jumlah Meja",
+                                          ),
+                                          validator: (value) {
+                                            if (value == null ||
+                                                value.trim().isEmpty) {
+                                              return "Jumlah meja wajib diisi";
+                                            }
+                                            return null;
+                                          },
+                                        ),
+                                        const SizedBox(height: 15),
+                                        BlocBuilder<SettingBloc, SettingState>(
+                                          bloc: context.read<SettingBloc>(),
+                                          builder: (context, state) {
+                                            return Align(
+                                              alignment: Alignment.centerRight,
+                                              child: ElevatedButton.icon(
+                                                icon: Icon(
+                                                  Icons.add,
+                                                  size: 20,
+                                                  color: AppColors.primary,
+                                                ),
+                                                onPressed:
+                                                    (state
+                                                            is FailedGetTableDataSettingState ||
+                                                        (state
+                                                                is SuccessGetTableDataSettingState &&
+                                                            state
+                                                                .tableDate
+                                                                .isEmpty))
+                                                    ? () {
+                                                        if (_formKey
+                                                            .currentState!
+                                                            .validate()) {
+                                                          context
+                                                              .read<
+                                                                SettingBloc
+                                                              >()
+                                                              .add(
+                                                                AddNumberOftableSettingEvent(
+                                                                  tableC.text,
+                                                                ),
+                                                              );
+                                                        }
+                                                      }
+                                                    : null,
+                                                label: Text(
+                                                  "Tambah",
+                                                  style: AppTheme
+                                                      .lightTheme
+                                                      .textTheme
+                                                      .titleMedium
+                                                      ?.copyWith(
+                                                        color:
+                                                            AppColors.primary,
+                                                      ),
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                        ),
+                                        Text(
+                                          "Detail informasi yang tersedia",
+                                          style: AppTheme
+                                              .lightTheme
+                                              .textTheme
+                                              .headlineSmall,
+                                        ),
+                                        const SizedBox(height: 15),
+                                        BlocBuilder<SettingBloc, SettingState>(
+                                          bloc: context.read<SettingBloc>(),
+                                          builder: (context, state) {
+                                            if (state
+                                                is LoadingGetTableDataSettingState) {
+                                              return Center(
+                                                child:
+                                                    CircularProgressIndicator(),
+                                              );
+                                            } else if (state
+                                                is SuccessGetTableDataSettingState) {
+                                              return ListTile(
+                                                title: Text(
+                                                  "Jumlah Meja ${state.tableDate}",
+                                                ),
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(8),
+                                                ),
+                                                tileColor:
+                                                    AppColors.cardBackground,
+                                                trailing: IconButton(
+                                                  onPressed: () {
+                                                    context.read<SettingBloc>().add(
+                                                      DeleteTableDataSettingEvent(
+                                                        key: state.tableDate,
+                                                      ),
+                                                    );
+                                                  },
+                                                  icon: Icon(
+                                                    Icons.delete,
+                                                    color: Colors.red,
+                                                  ),
+                                                ),
+                                              );
+                                            } else {
+                                              return Center(
+                                                child: Text("Tidak ada data"),
+                                              );
+                                            }
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              backgroundColor: AppColors.cardBackground,
+                              enableDrag: true,
+                            );
+                          },
                         ),
-                        
+
                         title: "Tambah Jumlah Meja",
                         subtitle:
                             "*Lakukan penyesuaian untuk jumlah meja tersedia",

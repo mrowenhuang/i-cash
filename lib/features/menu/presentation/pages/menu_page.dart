@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:i_cash/common/theme/app_color.dart';
 import 'package:i_cash/common/theme/app_theme.dart';
 import 'package:i_cash/core/intern/money_format.dart';
+import 'package:i_cash/features/menu/domain/usecases/get_menu_data.dart';
 import 'package:i_cash/features/menu/presentation/bloc/menu_bloc.dart';
 import 'package:intl/intl.dart';
 
@@ -17,26 +18,17 @@ class MenuPage extends StatefulWidget {
   State<MenuPage> createState() => _MenuPageState();
 }
 
-class _MenuPageState extends State<MenuPage>
-    with SingleTickerProviderStateMixin {
-  late TabController _tabController;
-
+class _MenuPageState extends State<MenuPage> {
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 1, vsync: this);
     context.read<MenuBloc>().add(GetMenuDataEvent());
-  }
-
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Column(
         // crossAxisAlignment: CrossAxisAlignment.start,
         children: [
