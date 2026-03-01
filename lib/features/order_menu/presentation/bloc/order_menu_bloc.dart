@@ -35,7 +35,13 @@ class OrderMenuBloc extends Bloc<OrderMenuEvent, OrderMenuState> {
   ) async {
     /// kalau sudah ada cache → langsung return
     if (_cachedMakanan != null) {
-      emit(SuccessOrderMenuMakananState(menuData: _cachedMakanan!));
+      emit(
+        SuccessOrderMenuMakananState(
+          menuData: _cachedMakanan!
+              .where((element) => element.status != '0')
+              .toList(),
+        ),
+      );
       return;
     }
 
@@ -49,7 +55,11 @@ class OrderMenuBloc extends Bloc<OrderMenuEvent, OrderMenuState> {
         _cachedMakanan = menus;
 
         /// simpan cache
-        emit(SuccessOrderMenuMakananState(menuData: menus));
+        emit(
+          SuccessOrderMenuMakananState(
+            menuData: menus.where((element) => element.status != '0').toList(),
+          ),
+        );
       },
     );
   }
@@ -62,7 +72,13 @@ class OrderMenuBloc extends Bloc<OrderMenuEvent, OrderMenuState> {
     Emitter<OrderMenuState> emit,
   ) async {
     if (_cachedMinuman != null) {
-      emit(SuccessOrderMenuMinumanState(menuData: _cachedMinuman!));
+      emit(
+        SuccessOrderMenuMinumanState(
+          menuData: _cachedMinuman!
+              .where((element) => element.status != '0')
+              .toList(),
+        ),
+      );
       return;
     }
 
@@ -74,7 +90,11 @@ class OrderMenuBloc extends Bloc<OrderMenuEvent, OrderMenuState> {
       (failure) => emit(FailedOrderMenuMinumanState(message: failure.message)),
       (menus) {
         _cachedMinuman = menus;
-        emit(SuccessOrderMenuMinumanState(menuData: menus));
+        emit(
+          SuccessOrderMenuMinumanState(
+            menuData: menus.where((element) => element.status != '0').toList(),
+          ),
+        );
       },
     );
   }

@@ -54,3 +54,5 @@ final class FailedOrderMenuMinumanState extends OrderMenuState {
   @override
   List<Object> get props => [message];
 }
+
+
