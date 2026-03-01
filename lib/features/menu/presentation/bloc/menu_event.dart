@@ -15,3 +15,4 @@ final class ChangeTabMenuEvent extends MenuEvent {
 
   const ChangeTabMenuEvent({required this.groupedMenu, required this.index});
 }
+

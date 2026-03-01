@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:i_cash/common/theme/app_color.dart';
 import 'package:i_cash/common/theme/app_theme.dart';
 import 'package:i_cash/core/widget/sidebar_button.dart';
@@ -7,6 +8,7 @@ import 'package:i_cash/features/dashboard/presentation/pages/dashboard_view_page
 import 'package:i_cash/features/menu/presentation/pages/menu_page.dart';
 import 'package:i_cash/features/order/presentation/pages/order_page.dart';
 import 'package:i_cash/features/order_menu/presentation/pages/order_menu_page.dart';
+import 'package:i_cash/features/order_menu/presentation/pages/order_menu_wrapper.dart';
 import 'package:i_cash/features/setting/presentation/pages/setting_page.dart';
 
 class DashboardPage extends StatefulWidget {
@@ -26,7 +28,8 @@ class _DashboardPageState extends State<DashboardPage> {
     const MenuPage(),
     const OrderPage(),
     SettingPage(userLoginData: widget.userloginData),
-    const OrderMenuPage(),
+    // const OrderMenuPage(),
+    OrderMenuWrapper(userLoginEntities: widget.userloginData),
   ];
 
   void changePage(int index) {

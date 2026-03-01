@@ -137,6 +137,7 @@ class SettingLocalDatasourceImpl implements SettingLocalDatasource {
   @override
   Future<bool> deleteTaxDataFromLocal({required String key}) async {
     try {
+      
       final db = await _localDatabase.database;
 
       await db.delete('tax', where: 'nameTax = ?', whereArgs: [key]);

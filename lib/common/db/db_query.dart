@@ -31,20 +31,40 @@ class DbQuery {
     updatedAt TEXT NULL
   )
   ''';
-  
+
   final String table = '''
   CREATE TABLE many_table (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     manyTable TEXT NULL
   )
   ''';
-  
+
   final String tax = '''
   CREATE TABLE tax (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     nameTax TEXT NULL,
     percentTax TEXT NULL,
     activeTax TEXT NULL
+  )
+  ''';
+
+  final String orderMenuTable = '''
+  CREATE TABLE order_menu (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    orderId TEXT NULL,
+    orderDate TEXT NULL,
+    employeeName TEXT NULL,
+    employeeRole TEXT NULL,
+    foodOrder TEXT NULL,
+    drinkOrder TEXT NULL,
+    serviceAndTax TEXT NULL,
+    noTaxPrice TEXT NULL,
+    totalPrice TEXT NULL,
+    status TEXT NULL,
+    sendStatus TEXT NULL,
+    createdAt TEXT NULL,
+    sendAt TEXT NULL,
+    updateAt TEXT NULL    
   )
   ''';
 }

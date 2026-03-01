@@ -8,7 +8,9 @@ import 'package:i_cash/common/theme/app_theme.dart';
 import 'package:i_cash/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:i_cash/features/auth/presentation/pages/login_page.dart';
 import 'package:i_cash/features/menu/presentation/bloc/menu_bloc.dart';
+import 'package:i_cash/features/order_menu/presentation/bloc/handle_order_menu_bloc/handle_order_menu_bloc.dart';
 import 'package:i_cash/features/order_menu/presentation/bloc/order_menu_bloc.dart';
+import 'package:i_cash/features/order_menu/presentation/bloc/tax_bloc/tax_bloc.dart';
 import 'package:i_cash/features/setting/presentation/bloc/setting_bloc.dart';
 import 'package:i_cash/features/setting/presentation/bloc/setting_menu_bloc/setting_menu_bloc.dart';
 import 'package:i_cash/firebase_options.dart';
@@ -44,7 +46,9 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => sl<SettingMenuBloc>()),
         BlocProvider(create: (context) => sl<SettingBloc>()),
         BlocProvider(create: (context) => sl<MenuBloc>()),
-        BlocProvider(create: (context) => sl<OrderMenuBloc>()),
+        // BlocProvider(create: (context) => sl<OrderMenuBloc>()),
+        // BlocProvider(create: (context) => sl<HandleOrderMenuBloc>()),
+        // BlocProvider(create: (context) => sl<TaxBloc>()),
       ],
       child: GetMaterialApp(
         title: 'i-cash',

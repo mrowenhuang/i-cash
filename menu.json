@@ -48,8 +48,56 @@
     "updatedAt": ""
   },
   {
-    "idMenu": "23554",
+    "idMenu": "5435",
     "name": "Ayam Geprek",
+    "sellPrice": "30000",
+    "capitalPrice": "18000",
+    "uomPrice": "Rp",
+    "status": "1",
+    "groupName": "Makanan",
+    "image": "",
+    "createdAt": "",
+    "updatedAt": ""
+  },
+  {
+    "idMenu": "1231243",
+    "name": "Ayam Bakar Mentega",
+    "sellPrice": "30000",
+    "capitalPrice": "18000",
+    "uomPrice": "Rp",
+    "status": "1",
+    "groupName": "Makanan",
+    "image": "",
+    "createdAt": "",
+    "updatedAt": ""
+  },
+  {
+    "idMenu": "1234324",
+    "name": "Ayam Cabe Hijau",
+    "sellPrice": "30000",
+    "capitalPrice": "18000",
+    "uomPrice": "Rp",
+    "status": "1",
+    "groupName": "Makanan",
+    "image": "",
+    "createdAt": "",
+    "updatedAt": ""
+  },
+  {
+    "idMenu": "54323",
+    "name": "Ikan Bakar",
+    "sellPrice": "30000",
+    "capitalPrice": "18000",
+    "uomPrice": "Rp",
+    "status": "1",
+    "groupName": "Makanan",
+    "image": "",
+    "createdAt": "",
+    "updatedAt": ""
+  },
+  {
+    "idMenu": "23543254",
+    "name": "Sayur Asam",
     "sellPrice": "30000",
     "capitalPrice": "18000",
     "uomPrice": "Rp",

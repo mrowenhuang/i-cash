@@ -9,7 +9,7 @@ class LocalDatabase {
 
   static const _dbName = 'icash.db';
   static const _dbVersion =
-      3; // ← tinggal naikkan angka kalau ada perubahan schema
+      2; // ← tinggal naikkan angka kalau ada perubahan schema
 
   LocalDatabase._init();
 
@@ -36,6 +36,7 @@ class LocalDatabase {
     await db.execute(DbQuery().menuTable);
     await db.execute(DbQuery().tax);
     await db.execute(DbQuery().table);
+    await db.execute(DbQuery().orderMenuTable);
   }
 
   /// dipanggil otomatis kalau version naik
@@ -44,8 +45,10 @@ class LocalDatabase {
 
     if (oldVersion < 2) {
       /// contoh upgrade versi 1 → 2
-      await db.execute(DbQuery().tax);
-      await db.execute(DbQuery().table);
+      await db.execute(DbQuery().orderMenuTable);
+      // await db.execute(DbQuery().tax);
+      // await db.execute(DbQuery().table);
+
       // await db.execute(DbQuery().userLogin);
 
       // await db.execute(DbQuery().menuTable);
